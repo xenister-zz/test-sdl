@@ -6,14 +6,13 @@
 /*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/31 15:04:17 by upopee            #+#    #+#             */
-/*   Updated: 2018/04/06 17:53:22 by susivagn         ###   ########.fr       */
+/*   Updated: 2018/04/06 18:38:30 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <SDL/SDL.h>
-#include <string.h>
 
 // int		init_window(void)
 // {
@@ -51,32 +50,8 @@
 // 	return (EXIT_SUCCESS);
 // }
 
-SDL_Surface *load_image(std::string);
-
-SDL_Surface *load_image(std::string) 
-{ 
-	//Surface tampon qui nous servira pour charger l'image 
-	SDL_Surface* loadedImage = NULL; 
-
-	//L'image optimisée qu'on va utiliser 
-	SDL_Surface* optimizedImage = NULL;
-
-	//Chargement de l'image
-	loadedImage = SDL_LoadBMP("clue.bmp");
-
-	//Si le chargement se passe bien
-	if( loadedImage != NULL )
-	{ 
-		//Création de l'image optimisée 
-		optimizedImage = SDL_DisplayFormat( loadedImage ); 
-		
-		//Libération de l'ancienne image
-		SDL_FreeSurface( loadedImage ); 
-	}
-	
-	//On retourne l'image optimisée 
-	return optimizedImage; 
-}
+SDL_Surface 	*load_image(char *filename);
+void			apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination);
 
 int main( int argc, char *argv[ ] )
 {
@@ -103,9 +78,9 @@ int main( int argc, char *argv[ ] )
     {
         printf( "Can't set video mode: %s\n", SDL_GetError( ) );
         return EXIT_FAILURE;
-	}   
+	}
 	SDL_WM_SetCaption("La belle Fenetre !!!", NULL);
-	
+
 	while (42)
 	{
 		SDL_WaitEvent(&event);
@@ -113,4 +88,40 @@ int main( int argc, char *argv[ ] )
 			break;
 	}
     return EXIT_SUCCESS;
+}
+
+void	apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination)
+{
+	SDL_Rect	offset;
+
+	offset.x = x;
+	offset.y = y;
+
+	//blitting de la surface
+	SDL_BlitSurface(source, NULL, destination, &offset);
+}
+
+SDL_Surface 	*load_image(char *filename)
+{
+	//Surface tampon qui nous servira pour charger l'image
+	SDL_Surface* loadedImage = NULL;
+
+	//L'image optimisée qu'on va utiliser
+	SDL_Surface* optimizedImage = NULL;
+
+	//Chargement de l'image
+	loadedImage = SDL_LoadBMP(filename);
+
+	//Si le chargement se passe bien
+	if( loadedImage != NULL )
+	{
+		//Création de l'image optimisée
+		optimizedImage = SDL_DisplayFormat( loadedImage );
+
+		//Libération de l'ancienne imag
+		SDL_FreeSurface( loadedImage );
+	}
+
+	//On retourne l'image optimisée
+	return optimizedImage;
 }

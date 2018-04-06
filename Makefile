@@ -6,7 +6,7 @@
 #    By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/31 15:28:26 by upopee            #+#    #+#              #
-#    Updated: 2018/04/06 15:56:25 by susivagn         ###   ########.fr        #
+#    Updated: 2018/04/06 18:56:05 by susivagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC =		gcc
 CFLAGS =	-I/Users/susivagn/homebrew/include/SDL -D_GNU_SOURCE=1 -D_THREAD_SAFE
 LFLAGS =	-L/Users/susivagn/homebrew/lib -lSDLmain -lSDL -Wl,-framework,Cocoa
 
-FILE =		sdl_test.c
+FILE =		sdl.c
 
 all:
 	@$(CC) $(CFLAGS) $(LFLAGS) $(FILE) -o $(NAME)
