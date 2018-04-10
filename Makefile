@@ -6,14 +6,14 @@
 #    By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/31 15:28:26 by upopee            #+#    #+#              #
-#    Updated: 2018/04/06 18:56:05 by susivagn         ###   ########.fr        #
+#    Updated: 2018/04/10 19:40:32 by susivagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME =		sdl_test
+NAME =		sdl
 CC =		gcc
 CFLAGS =	-I/Users/susivagn/homebrew/include/SDL -D_GNU_SOURCE=1 -D_THREAD_SAFE
-LFLAGS =	-L/Users/susivagn/homebrew/lib -lSDLmain -lSDL -Wl,-framework,Cocoa
+LFLAGS =	-L/Users/susivagn/homebrew/lib -lSDLmain -lSDL_image -lSDL -Wl,-framework,Cocoa
 
 FILE =		sdl.c
 
