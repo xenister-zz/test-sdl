@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
+#    By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/31 15:28:26 by upopee            #+#    #+#              #
-#    Updated: 2018/04/17 19:07:57 by susivagn         ###   ########.fr        #
+#    Updated: 2018/04/19 18:29:34 by susivagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,18 +14,20 @@ NAME =		sdl
 
 CC =		gcc
 
+SANITIZE =	-fsanitize=address
+
 CFLAGS =	-I/Users/susivagn/homebrew/include/SDL -D_GNU_SOURCE=1 -D_THREAD_SAFE
 LFLAGS =	-L/Users/susivagn/homebrew/lib -lSDLmain -lSDL_image -lSDL -Wl,-framework,Cocoa
 
 CFLAGS2 =	-I/Users/susivagn/homebrew/include/SDL2 -D_THREAD_SAFE
 LFLAGS2 =	-L/Users/susivagn/homebrew/lib -lSDL2
 
-FILE =		sdl.c
+FILE =		sdl_main.c
 
 FILE2 =		sdl2.c
 
 all:
-	@$(CC) $(CFLAGS) $(LFLAGS) $(FILE) -o $(NAME)
+	@$(CC) -g $(SANITIZE) $(CFLAGS) $(LFLAGS) $(FILE) -o $(NAME)
 	@printf "$(GREEN_B)✓$(EOC) $(YELLOW)$(NAME)$(EOC) : Binary created\n"
 
 all2:

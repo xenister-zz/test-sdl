@@ -6,7 +6,7 @@
 /*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/31 15:04:17 by upopee            #+#    #+#             */
-/*   Updated: 2018/04/06 18:38:30 by susivagn         ###   ########.fr       */
+/*   Updated: 2018/04/19 14:27:46 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,16 @@ int main( int argc, char *argv[ ] )
 
     if( SDL_Init( SDL_INIT_VIDEO ) == -1 )
     {
-        printf( "Can't init SDL:  %s\n", SDL_GetError( ) );
+        fprintf(stderr, "Can't init SDL: |%s|\n", SDL_GetError());
         return EXIT_FAILURE;
     }
 
 	atexit( SDL_Quit ); 
 	win_flags = SDL_HWSURFACE | SDL_RESIZABLE | SDL_DOUBLEBUF;
 
-    if( !(screen = SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, win_flags )) )
+    if(!(screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, win_flags)))
     {
-        printf( "Can't set video mode: %s\n", SDL_GetError( ) );
+        printf("Can't set video mode: %s\n", SDL_GetError());
         return EXIT_FAILURE;
 	}
 	SDL_WM_SetCaption("La belle Fenetre !!!", NULL);
@@ -87,6 +87,7 @@ int main( int argc, char *argv[ ] )
 		if (event.type == SDL_QUIT)
 			break;
 	}
+	SDL_Quit();
     return EXIT_SUCCESS;
 }
 
