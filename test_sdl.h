@@ -6,7 +6,7 @@
 /*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 17:10:59 by susivagn          #+#    #+#             */
-/*   Updated: 2018/04/19 17:42:34 by susivagn         ###   ########.fr       */
+/*   Updated: 2018/04/19 18:52:55 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 # include <SDL/SDL.h>
 # include <SDL_image.h>
 
-# define WINDOW_W 840
-# define WINDOW_H 580
+# define WINDOW_W 800
+# define WINDOW_H 800
 # define COLOR_DEPTH 32
 
-void    actu(SDL_Surface *screen);
+void            actu(SDL_Surface *screen);
 SDL_Surface		*init_sdl(SDL_Surface *screen);
 
 #endif

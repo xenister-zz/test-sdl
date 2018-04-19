@@ -6,7 +6,7 @@
 /*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:28:22 by susivagn          #+#    #+#             */
-/*   Updated: 2018/04/19 18:17:16 by susivagn         ###   ########.fr       */
+/*   Updated: 2018/04/19 19:15:21 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ SDL_Surface		*init_sdl(SDL_Surface *screen)
         printf("Erreur d'initialisation de la SDL");
         exit(EXIT_FAILURE);
     }
-    screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, BPP, SDL_SWSURFACE);
+    screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, BPP, SDL_HWSURFACE);
     if (screen == NULL)
     {
         printf("Impossible de charger le mode vidéo : |%s|\n", SDL_GetError());
@@ -51,17 +51,25 @@ SDL_Surface		*init_sdl(SDL_Surface *screen)
 
 void			actu(SDL_Surface *screen)
 {
-    int continuer = 1;
-    SDL_Event event;
-    Uint32 fond = 0;
+	SDL_Surface		*background = NULL;
+    int 			continuer = 1;
+    SDL_Event 		event;
+    //Uint32 			fond = 0;
  
 	printf("-----IN ACTU-----\n");
     while (continuer)
     {
         SDL_WM_SetCaption("TESTATOR SDL !", NULL);
-        fond = SDL_MapRGB(screen->format, 228, 241, 254);
-        SDL_FillRect(screen, NULL, fond);
-		printf("-FOND-|%d|-\n", fond);
+		if (!background)
+			background = IMG_Load("FIST-iniere.jpg");
+		if (background == NULL)
+		{
+    		printf("Erreur de chargement de l'image : %s",SDL_GetError());
+    		return ;
+		}
+        //fond = SDL_MapRGB(screen->format, 228, 241, 254);
+        //SDL_FillRect(screen, NULL, fond);
+		//printf("-FOND-|%d|-\n", fond);
         SDL_Flip(screen);
         SDL_WaitEvent(&event);
         switch(event.type)
