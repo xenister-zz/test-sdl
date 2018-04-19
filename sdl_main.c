@@ -6,7 +6,7 @@
 /*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:28:22 by susivagn          #+#    #+#             */
-/*   Updated: 2018/04/19 19:15:21 by susivagn         ###   ########.fr       */
+/*   Updated: 2018/04/19 22:11:42 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int 			main(int argc, char *argv[])
 		return (EXIT_FAILURE);
     }
     actu(screen);
+
     SDL_Quit();
     return EXIT_SUCCESS;
 }
@@ -51,18 +52,33 @@ SDL_Surface		*init_sdl(SDL_Surface *screen)
 
 void			actu(SDL_Surface *screen)
 {
-	SDL_Surface		*background = NULL;
+	SDL_Surface		*background = NULL, *title = NULL;
     int 			continuer = 1;
     SDL_Event 		event;
+	SDL_Rect		positionbg, positiontitle;
     //Uint32 			fond = 0;
+	
+	positionbg.x = 0;
+    positionbg.y = 0;
+	positiontitle.x = 50;
+    positiontitle.y = 400;
  
 	printf("-----IN ACTU-----\n");
     while (continuer)
     {
         SDL_WM_SetCaption("TESTATOR SDL !", NULL);
 		if (!background)
+		{
 			background = IMG_Load("FIST-iniere.jpg");
-		if (background == NULL)
+			SDL_BlitSurface(background, NULL, screen, &positionbg);
+			title = IMG_Load("fistwars.png");
+			SDL_BlitSurface(title, NULL, screen, &positiontitle);
+		}
+		// if (!title)
+		// {
+			
+		// }
+		if ((background == NULL) || (title == NULL))
 		{
     		printf("Erreur de chargement de l'image : %s",SDL_GetError());
     		return ;
@@ -70,12 +86,17 @@ void			actu(SDL_Surface *screen)
         //fond = SDL_MapRGB(screen->format, 228, 241, 254);
         //SDL_FillRect(screen, NULL, fond);
 		//printf("-FOND-|%d|-\n", fond);
+		
         SDL_Flip(screen);
         SDL_WaitEvent(&event);
         switch(event.type)
         {
             case SDL_QUIT:
-                continuer = 0;
+			{
+				SDL_FreeSurface(background);
+				SDL_FreeSurface(title);
+				continuer = 0;
+			}
         }
     }
 }
