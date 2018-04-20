@@ -6,7 +6,7 @@
 /*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:28:22 by susivagn          #+#    #+#             */
-/*   Updated: 2018/04/20 19:31:38 by susivagn         ###   ########.fr       */
+/*   Updated: 2018/04/20 20:09:47 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int 			main(int argc, char *argv[])
 {
     SDL_Surface *screen = NULL;
+	int			boo = 0;
     
 	printf("-----start-----\n");
 	if ((screen = init_sdl(screen)) == NULL)
@@ -22,11 +23,9 @@ int 			main(int argc, char *argv[])
 		printf("-----can't init-----\n");
 		return (EXIT_FAILURE);
 	}
-	if (!start_screen(screen))
-	{
-		SDL_Quit();
-		return (EXIT_FAILURE);
-	}
+	boo = start_screen(screen);
+	if (boo == 1)
+		boo = main_screen(screen);
 
     SDL_Quit();
     return (EXIT_SUCCESS);
