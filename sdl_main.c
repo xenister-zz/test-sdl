@@ -6,7 +6,7 @@
 /*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:28:22 by susivagn          #+#    #+#             */
-/*   Updated: 2018/04/19 22:16:48 by susivagn         ###   ########.fr       */
+/*   Updated: 2018/04/20 18:33:01 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,76 +17,67 @@ int 			main(int argc, char *argv[])
     SDL_Surface *screen = NULL;
     
 	printf("-----start-----\n");
-    if ((screen = init_sdl(screen)) == NULL)
+	if ((screen = init_sdl(screen)) == NULL)
 	{
 		printf("-----can't init-----\n");
 		return (EXIT_FAILURE);
-    }
-    actu(screen);
+	}
+	if (!start_screen(screen))
+	{
+		SDL_Quit();
+		return (EXIT_FAILURE);
+	}
 
     SDL_Quit();
-    return EXIT_SUCCESS;
+    return (EXIT_SUCCESS);
 }
 
 SDL_Surface		*init_sdl(SDL_Surface *screen)
 {
-    const int	SCREEN_W = WINDOW_W;
-	const int	SCREEN_H = WINDOW_H;
-	const int	BPP = COLOR_DEPTH;
-
-	printf("-----IN INIT-----\n");
+	//printf("-----IN INIT-----\n");
     if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
     {
-        printf("Erreur d'initialisation de la SDL");
+        //printf("Erreur d'initialisation de la SDL");
         exit(EXIT_FAILURE);
     }
-    screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, BPP, SDL_HWSURFACE);
+    screen = SDL_SetVideoMode(WINDOW_W, WINDOW_H, BPP, SDL_HWSURFACE | SDL_RESIZABLE);
     if (screen == NULL)
     {
-        printf("Impossible de charger le mode vidéo : |%s|\n", SDL_GetError());
+        //printf("Impossible de charger le mode vidéo : |%s|\n", SDL_GetError());
         exit(EXIT_FAILURE);
     }
-	printf("-----EXIT INIT-----\n");
+	//printf("-----EXIT INIT-----\n");
     return (screen);
 }
 
-void			actu(SDL_Surface *screen)
+int			start_screen(SDL_Surface *screen)
 {
 	SDL_Surface		*background = NULL, *title = NULL;
     int 			continuer = 1;
     SDL_Event 		event;
 	SDL_Rect		positionbg, positiontitle;
-    //Uint32 			fond = 0;
 	
 	positionbg.x = 0;
     positionbg.y = 0;
-	positiontitle.x = 50;
-    positiontitle.y = 400;
+	positiontitle.x = 73;
+    positiontitle.y = 550;
  
-	printf("-----IN ACTU-----\n");
+	printf("-----IN START SCREEN-----\n");
     while (continuer)
     {
-        SDL_WM_SetCaption("TESTATOR SDL !", NULL);
+        SDL_WM_SetCaption("-- SDL TESTINATATOR --", NULL);
 		if (!background)
 		{
 			background = IMG_Load("FIST-iniere.jpg");
 			SDL_BlitSurface(background, NULL, screen, &positionbg);
-			title = IMG_Load("fistwars.png");
+			title = IMG_Load("Corewar pix2.png");
 			SDL_BlitSurface(title, NULL, screen, &positiontitle);
 		}
-		// if (!title)
-		// {
-			
-		// }
 		if ((background == NULL) || (title == NULL))
 		{
     		printf("Erreur de chargement de l'image : %s",SDL_GetError());
-    		return ;
+    		return (0);
 		}
-        //fond = SDL_MapRGB(screen->format, 228, 241, 254);
-        //SDL_FillRect(screen, NULL, fond);
-		//printf("-FOND-|%d|-\n", fond);
-		
         SDL_Flip(screen);
         SDL_WaitEvent(&event);
         switch(event.type)
@@ -95,8 +86,11 @@ void			actu(SDL_Surface *screen)
 			{
 				SDL_FreeSurface(background);
 				SDL_FreeSurface(title);
-				continuer = 0;
+				return (0);
 			}
+			case SDL_KEYDOWN:
+				continuer = 0;
         }
     }
+    return (0);
 }
