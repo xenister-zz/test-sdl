@@ -6,7 +6,7 @@
 /*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 17:10:59 by susivagn          #+#    #+#             */
-/*   Updated: 2018/04/20 18:17:02 by susivagn         ###   ########.fr       */
+/*   Updated: 2018/04/20 19:47:11 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,13 @@
 
 int            start_screen(SDL_Surface *screen);
 SDL_Surface		*init_sdl(SDL_Surface *screen);
+
+typedef struct      s_sdl
+{
+    int             continuer;
+    SDL_Surface		screen;
+	SDL_Event		event;
+
+}                   t_sdl;
 
 #endif

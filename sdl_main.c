@@ -6,7 +6,7 @@
 /*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:28:22 by susivagn          #+#    #+#             */
-/*   Updated: 2018/04/20 18:33:01 by susivagn         ###   ########.fr       */
+/*   Updated: 2018/04/20 19:31:38 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,16 @@ int			start_screen(SDL_Surface *screen)
 				return (0);
 			}
 			case SDL_KEYDOWN:
-				continuer = 0;
+				switch(event.key.keysym.sym)
+				{
+					case SDLK_ESCAPE:
+						return (0);
+					case SDLK_SPACE || SDLK_RETURN:
+						return (1);
+				}
+				break;
+			//case default:
+				//continuer = 1;
         }
     }
     return (0);
