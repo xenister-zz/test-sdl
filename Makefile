@@ -6,7 +6,7 @@
 #    By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/31 15:28:26 by upopee            #+#    #+#              #
-#    Updated: 2018/04/19 18:29:34 by susivagn         ###   ########.fr        #
+#    Updated: 2018/04/26 17:59:04 by susivagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CC =		gcc
 SANITIZE =	-fsanitize=address
 
 CFLAGS =	-I/Users/susivagn/homebrew/include/SDL -D_GNU_SOURCE=1 -D_THREAD_SAFE
-LFLAGS =	-L/Users/susivagn/homebrew/lib -lSDLmain -lSDL_image -lSDL -Wl,-framework,Cocoa
+LFLAGS =	-L/Users/susivagn/homebrew/lib -lSDLmain -lSDL_image -lSDL_ttf -lSDL -Wl,-framework,Cocoa
 
 CFLAGS2 =	-I/Users/susivagn/homebrew/include/SDL2 -D_THREAD_SAFE
 LFLAGS2 =	-L/Users/susivagn/homebrew/lib -lSDL2
@@ -37,6 +37,8 @@ all2:
 clean:
 	@$(RM) $(NAME)
 	@printf "$(RED_B)✗$(EOC) $(YELLOW)$(NAME)$(EOC) : Binary deleted\n"
+
+re: clean all
 
 YELLOW =	\e[31;33m
 GREEN_B =	\e[32;1m
