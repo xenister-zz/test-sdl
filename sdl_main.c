@@ -6,7 +6,7 @@
 /*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:28:22 by susivagn          #+#    #+#             */
-/*   Updated: 2018/04/26 19:24:20 by susivagn         ###   ########.fr       */
+/*   Updated: 2018/04/27 19:53:30 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		ttf_init(t_sdl *sdlinfo)
 		printf("Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
 		return (-1);
 	}
-	sdlinfo->police = TTF_OpenFont("digitalix.ttf", 65);
+	sdlinfo->police = TTF_OpenFont("vcrmono.ttf", 18);
 	init_ttf_color(sdlinfo);
 	return (0);
 }
@@ -62,26 +62,73 @@ void	init_ttf_color(t_sdl *sdlinfo)
 	sdlinfo->green.r = 102;
 	sdlinfo->green.g = 255;
 	sdlinfo->green.b = 102;
+	sdlinfo->grey.r = 165;
+	sdlinfo->grey.g = 165;
+	sdlinfo->grey.b = 192;
 }
 
 int		main_screen(t_sdl *sdlinfo)
 {
-	while (sdlinfo->continuer)
+	printf("---- IN MAIN SCREEN ----\n");
+	while ((event_handler(sdlinfo)) != 0)
 	{
-		if ((sdlinfo->save = event_handler(sdlinfo)) < 1)
-			return (sdlinfo->save);
+		if (main_screen_update(sdlinfo) == -1)
+		{
+			printf("MAIN SCREEN UPDATE RETURNED ERROR\n");
+			return (-1);
+		}
 	}
 	return (-1);
+}
+
+int		main_screen_update(t_sdl *sdlinfo)
+{
+	int			x;
+	int			y;
+	SDL_Rect	memzone_pos;
+
+	printf("---- IN MAIN SCREEN UPDATE ----\n");
+	x = 1;
+	y = 1;
+	while (y < 65)
+	{
+		if (x == 65 && (y++))
+			x = 1;
+		memzone_pos.x = (x == 1) ? 0 : x * 22;
+		memzone_pos.y = (y == 1) ? 0 : y * 18;
+		if (memory_update(sdlinfo) == -1)
+			return (-1);
+		if ((SDL_BlitSurface(MEM_ZONE, NULL, MAINSCREEN, &memzone_pos)) < 0)
+		{
+			printf("SDL_BlitSurface ERROR\n");
+			return (-1);
+		}
+		SDL_FreeSurface(MEM_ZONE);
+		x++;
+	}
+	return (1);
+}
+
+int		memory_update(t_sdl *sdlinfo)
+{
+	printf("---- IN MEMORY UPDATE ----\n");
+	MEM_ZONE = TTF_RenderText_Solid(sdlinfo->police, "01", sdlinfo->red);
+	if (MEM_ZONE == NULL)
+	{
+		printf("TTF_Render ERROR\n");
+		return (-1);
+	}
+	return (1);
 }
 
 int		sdl_clean(t_sdl *sdlinfo, int resize)
 {
 	if (resize == 1)
 		SDL_FreeSurface(MAINSCREEN);
-	if (resize == 1 && (MAINSCREEN = SDL_SetVideoMode(WINDOW_BIGW, WINDOW_H, BPP, 
+	if (resize == 1 && (MAINSCREEN = SDL_SetVideoMode(WINDOW_BIGW, WINDOW_BIGH, BPP,
 		SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL)
 		printf("Impossible de changer MAINSCREEN : |%s|\n", SDL_GetError());
-	SDL_FillRect(MAINSCREEN, NULL, SDL_MapRGB(MAINSCREEN->format, 125, 0, 0));
+	SDL_FillRect(MAINSCREEN, NULL, SDL_MapRGB(MAINSCREEN->format, 0, 0, 0));
 	SDL_Flip(MAINSCREEN);
 	return (1);
 }
@@ -98,7 +145,7 @@ int		init_sdl(t_sdl	*sdlinfo)
         return (0);
     }
     MAINSCREEN = SDL_SetVideoMode(WINDOW_W, WINDOW_H, BPP,
-		 SDL_HWSURFACE | SDL_RESIZABLE | SDL_DOUBLEBUF);
+		 SDL_HWSURFACE | SDL_RESIZABLE);
     if (MAINSCREEN == NULL)
     {
         //printf("Impossible de charger le mode vidéo : |%s|\n", SDL_GetError());
@@ -146,10 +193,9 @@ int			start_screen(t_sdl *sdlinfo)
 
 int		event_handler(t_sdl *sdlinfo)
 {
-	while (sdlinfo->continuer)
+	while (SDL_PollEvent(&(sdlinfo->event)))
     {
 		SDL_Flip(MAINSCREEN);
-		SDL_WaitEvent(&sdlinfo->event);
 		if (EVENT_TYPE == SDL_KEYDOWN)
     	{
 			if (EVENT_KEY == SDLK_SPACE)
@@ -162,5 +208,5 @@ int		event_handler(t_sdl *sdlinfo)
 			return (0);
 		}
 	}
-	return (-1);
+	return (-2);
 }

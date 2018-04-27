@@ -6,7 +6,7 @@
 /*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 17:10:59 by susivagn          #+#    #+#             */
-/*   Updated: 2018/04/26 19:26:31 by susivagn         ###   ########.fr       */
+/*   Updated: 2018/04/27 19:10:00 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,14 @@
 # include <SDL_image.h>
 # include <SDL_ttf.h>
 
+# define MEM_SIZE 4096
 # define WINDOW_W 800
-# define WINDOW_BIGW 1400
+# define WINDOW_BIGW 1600
 # define WINDOW_H 800
+# define WINDOW_BIGH 1200
 # define BPP 32
 # define MAINSCREEN sdlinfo->screen
+# define MEM_ZONE sdlinfo->mem_zone
 # define EVENT_TYPE sdlinfo->event.type
 # define EVENT_KEY sdlinfo->event.key.keysym.sym
 # define BKGROUND_POS sdlinfo->background_pos
@@ -39,6 +42,7 @@ typedef struct      s_sdl
     SDL_Surface		*screen;
 	SDL_Surface		*background;
 	SDL_Surface		*title;
+	SDL_Surface		*mem_zone;
 	SDL_Event		event;
     SDL_Rect		main_pos;
 	SDL_Rect		title_pos;
@@ -49,6 +53,7 @@ typedef struct      s_sdl
 	SDL_Color		red;
 	SDL_Color		blue;
 	SDL_Color		green;
+	SDL_Color		grey;
 	int				save;
 }                   t_sdl;
 
@@ -58,5 +63,7 @@ int			sdl_clean(t_sdl *sdlinfo, int resize);
 int			start_screen(t_sdl *sdlinfo);
 int			init_sdl(t_sdl *sdlinfo);
 int			event_handler(t_sdl *sdlinfo);
+int			memory_update(t_sdl *sdlinfo);
+int			main_screen_update(t_sdl *sdlinfo);
 
 #endif
