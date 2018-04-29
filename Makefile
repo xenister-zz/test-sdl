@@ -6,7 +6,7 @@
 #    By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/31 15:28:26 by upopee            #+#    #+#              #
-#    Updated: 2018/04/26 17:59:04 by susivagn         ###   ########.fr        #
+#    Updated: 2018/04/29 18:40:19 by susivagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,10 @@ LFLAGS =	-L/Users/susivagn/homebrew/lib -lSDLmain -lSDL_image -lSDL_ttf -lSDL -W
 CFLAGS2 =	-I/Users/susivagn/homebrew/include/SDL2 -D_THREAD_SAFE
 LFLAGS2 =	-L/Users/susivagn/homebrew/lib -lSDL2
 
-FILE =		sdl_main.c
+FILE =		sdl_main.c \
+			#sdl_gamemode.c \
+			#sdl_init.c \
+			#sdl_start_screen.c
 
 FILE2 =		sdl2.c
 
