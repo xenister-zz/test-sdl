@@ -6,15 +6,14 @@
 /*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/29 18:31:03 by susivagn          #+#    #+#             */
-/*   Updated: 2018/04/29 18:33:45 by susivagn         ###   ########.fr       */
+/*   Updated: 2018/04/30 21:13:18 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_sdl.h"
+#include "my_sdl.h"
 
 int		init_sdl(t_sdl	*sdlinfo)
 {
-	//printf("-----IN INIT-----\n");
 	BKGROUND_SCREEN = NULL;
 	TITLE_SCREEN = NULL;
 	MAINSCREEN = NULL;
@@ -35,19 +34,20 @@ int		init_sdl(t_sdl	*sdlinfo)
 		printf("Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
 		return (-1);
 	}
-	//printf("-----EXIT INIT-----\n");
     return (1);
 }
 
 int		ttf_init(t_sdl *sdlinfo)
 {
-	sdlinfo->police = NULL;
+	sdlinfo->police_game = NULL;
+	sdlinfo->police_start_screen = NULL;
 	if (TTF_Init() == -1)
 	{
 		printf("Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
 		return (-1);
 	}
-	sdlinfo->police = TTF_OpenFont("vcrmono.ttf", 14);
+	sdlinfo->police_game = TTF_OpenFont("vcrmono.ttf", 14);
+	sdlinfo->police_start_screen = TTF_OpenFont("digitalix.ttf", 20);
 	init_ttf_color(sdlinfo);
 	init_ttf_pc_color(sdlinfo);
 	return (0);
