@@ -6,7 +6,7 @@
 /*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/29 18:31:03 by susivagn          #+#    #+#             */
-/*   Updated: 2018/04/30 21:13:18 by susivagn         ###   ########.fr       */
+/*   Updated: 2018/05/01 21:09:40 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int		init_sdl(t_sdl	*sdlinfo)
 	BKGROUND_SCREEN = NULL;
 	TITLE_SCREEN = NULL;
 	MAINSCREEN = NULL;
+	NAVI = NULL;
     if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
     {
         printf("Erreur d'initialisation de la SDL");

@@ -6,7 +6,7 @@
 /*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:28:22 by susivagn          #+#    #+#             */
-/*   Updated: 2018/04/30 21:21:27 by susivagn         ###   ########.fr       */
+/*   Updated: 2018/05/01 19:26:56 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ int 			main(int argc, char *argv[])
 	{
 		printf("ERROR : Start Screen returned 0");
 	}
-	if (sdlinfo->save == 1 && sdl_clean(sdlinfo, 1))
-	 	sdlinfo->save = main_screen(sdlinfo);
+	if (sdlinfo->save == 1 && sdl_clean(sdlinfo, 0, 1))
+		title_screen(sdlinfo);
+	if (sdlinfo->save == 1 && sdl_clean(sdlinfo, 1, 0))
+	 	main_screen(sdlinfo);
+	SDL_FreeSurface(MAINSCREEN);
     SDL_Quit();
 	TTF_CloseFont(sdlinfo->police_game);
 	TTF_CloseFont(sdlinfo->police_start_screen);
@@ -62,7 +65,7 @@ int		main_screen_update(t_sdl *sdlinfo)
 	
 	// y = (CUR_START / 64) | x = (CUR_START % 64)
 	printf("---- IN MAIN SCREEN UPDATE ----\n");
-	PLAYER = 0;
+	PLAYER = 1;
 	while (CUR_START != CUR_END)
 	{
 		printf("X = %d ---- Y = %d", (CUR_START % 64), (CUR_START / 64));
@@ -84,7 +87,7 @@ int		main_screen_update(t_sdl *sdlinfo)
 	return (1);
 }
 
-int		sdl_clean(t_sdl *sdlinfo, int resize)
+int		sdl_clean(t_sdl *sdlinfo, int resize, int surface_free)
 {
 	if (resize == 1)
 		SDL_FreeSurface(MAINSCREEN);
@@ -93,5 +96,12 @@ int		sdl_clean(t_sdl *sdlinfo, int resize)
 		printf("Impossible de changer MAINSCREEN : |%s|\n", SDL_GetError());
 	SDL_FillRect(MAINSCREEN, NULL, SDL_MapRGB(MAINSCREEN->format, 0, 0, 0));
 	SDL_Flip(MAINSCREEN);
+	if (surface_free == 1)
+	{
+		SDL_FreeSurface(BKGROUND_SCREEN);
+		BKGROUND_SCREEN = NULL;
+		SDL_FreeSurface(TITLE_SCREEN);
+		SDL_FreeSurface(MEM_ZONE);
+	}
 	return (1);
 }

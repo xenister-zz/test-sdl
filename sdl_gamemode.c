@@ -6,7 +6,7 @@
 /*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/29 18:34:10 by susivagn          #+#    #+#             */
-/*   Updated: 2018/04/30 21:15:45 by susivagn         ###   ########.fr       */
+/*   Updated: 2018/05/01 17:05:36 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 int		update_gamemode1(t_sdl *sdlinfo)
 {
 	printf("---- IN MEMORY UPDATE ----\n");
-	sdlinfo->write = 1;
+	FWRITE = 0;
+	FNONE = 0;
+	FPC = 0;
 	if (GAMEMODE == 1)
 	{
+		//get_data(sdlinfo);
 		get_txt_color(sdlinfo);
-		if (PLAYER > 0)
+		if (FNONE == 0)
 			MEM_ZONE = TTF_RenderText_Shaded(sdlinfo->police_game, "01",
 				sdlinfo->txt_color, sdlinfo->bg_color);
 		else
@@ -39,9 +42,10 @@ int		update_gamemode1(t_sdl *sdlinfo)
 
 int		update_gamemode2(t_sdl *sdlinfo)
 {
+	//get_data(sdlinfo);
 	get_block_color(sdlinfo);
-	if (sdlinfo->write == 1)
-		MEM_ZONE = TTF_RenderText_Shaded(sdlinfo->police_game, "XX",
+	if (FWRITE == 1)
+		MEM_ZONE = TTF_RenderText_Shaded(sdlinfo->police_game, "  ",
 			sdlinfo->bg_color, sdlinfo->black);
 	else if (PLAYER > 0)
 		MEM_ZONE = TTF_RenderText_Shaded(sdlinfo->police_game, "  ",
@@ -59,7 +63,7 @@ int		update_gamemode2(t_sdl *sdlinfo)
 void	get_block_color(t_sdl *sdlinfo)
 {
 	printf("++++ In Block Color ++++\n");
-	if (sdlinfo->pc == 0 && sdlinfo->write != 0)
+	if (FPC == 0 && FWRITE == 1)
 	{
 		if (PLAYER == 1)
 			sdlinfo->bg_color = sdlinfo->red;
@@ -87,9 +91,9 @@ void	get_block_color(t_sdl *sdlinfo)
 void	get_txt_color(t_sdl *sdlinfo)
 {
 	printf("++++ In Get Texte Color ++++\n");
-	if (sdlinfo->write == 1)
+	if (FWRITE == 1)
 		get_wrt_txt_color(sdlinfo);
-	else if (sdlinfo->pc == 0)
+	else if (FPC == 0)
 	{
 		sdlinfo->bg_color = sdlinfo->black;
 		if (PLAYER == 1)
@@ -101,7 +105,7 @@ void	get_txt_color(t_sdl *sdlinfo)
 		else if (PLAYER == 4)
 			sdlinfo->txt_color = sdlinfo->yellow;
 	}
-	if (sdlinfo->pc == 1)
+	if (FPC == 1)
 	{
 		sdlinfo->txt_color = sdlinfo->black;
 		if (PLAYER == 1)
