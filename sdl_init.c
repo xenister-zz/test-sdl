@@ -6,36 +6,30 @@
 /*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/29 18:31:03 by susivagn          #+#    #+#             */
-/*   Updated: 2018/05/01 21:09:40 by susivagn         ###   ########.fr       */
+/*   Updated: 2018/05/03 05:34:12 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "my_sdl.h"
 
-int		init_sdl(t_sdl	*sdlinfo)
+int		init_sdl(t_sdl *sdlinfo)
 {
 	BKGROUND_SCREEN = NULL;
 	TITLE_SCREEN = NULL;
 	MAINSCREEN = NULL;
 	NAVI = NULL;
-    if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
-    {
-        printf("Erreur d'initialisation de la SDL");
-        return (0);
-    }
-    MAINSCREEN = SDL_SetVideoMode(WINDOW_W, WINDOW_H, BPP,
-		 SDL_HWSURFACE | SDL_RESIZABLE);
-    if (MAINSCREEN == NULL)
-    {
-        printf("Impossible de charger le mode vidéo : |%s|\n", SDL_GetError());
-        return (0);
-    }
-	if (ttf_init(sdlinfo) == -1)
-	{
-		printf("Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
+	sdlinfo->save = 0;
+	CUR_X = 0;
+	CUR_Y = MEM_SIZE;
+	if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
 		return (-1);
-	}
-    return (1);
+	MAINSCREEN = SDL_SetVideoMode(WINDOW_W, WINDOW_H, BPP,
+		SDL_HWSURFACE | SDL_RESIZABLE);
+	if (MAINSCREEN == NULL)
+		return (-1);
+	if (ttf_init(sdlinfo) == -1)
+		return (-1);
+	return (1);
 }
 
 int		ttf_init(t_sdl *sdlinfo)
@@ -43,15 +37,14 @@ int		ttf_init(t_sdl *sdlinfo)
 	sdlinfo->police_game = NULL;
 	sdlinfo->police_start_screen = NULL;
 	if (TTF_Init() == -1)
-	{
-		printf("Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
 		return (-1);
-	}
-	sdlinfo->police_game = TTF_OpenFont("vcrmono.ttf", 14);
-	sdlinfo->police_start_screen = TTF_OpenFont("digitalix.ttf", 20);
+	sdlinfo->police_game = TTF_OpenFont("resources/vcrmono.ttf", 14);
+	sdlinfo->police_start_screen = TTF_OpenFont("resources/digitalix.ttf", 20);
+	if (sdlinfo->police_game == NULL || sdlinfo->police_start_screen == NULL)
+		return (-1);
 	init_ttf_color(sdlinfo);
 	init_ttf_pc_color(sdlinfo);
-	return (0);
+	return (1);
 }
 
 void	init_ttf_color(t_sdl *sdlinfo)

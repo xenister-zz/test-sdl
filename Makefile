@@ -6,7 +6,7 @@
 #    By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/31 15:28:26 by upopee            #+#    #+#              #
-#    Updated: 2018/04/30 15:25:37 by susivagn         ###   ########.fr        #
+#    Updated: 2018/05/02 19:51:16 by susivagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ LFLAGS2 =	-L/Users/susivagn/homebrew/lib -lSDL2
 FILE =		sdl_main.c \
 			sdl_gamemode.c \
 			sdl_init.c \
-			sdl_start_screen.c
+			sdl_start_screen.c \
+			sdl_title.c
 
 FILE2 =		sdl2.c
 

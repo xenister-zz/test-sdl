@@ -6,7 +6,7 @@
 /*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/29 18:34:10 by susivagn          #+#    #+#             */
-/*   Updated: 2018/05/01 17:05:36 by susivagn         ###   ########.fr       */
+/*   Updated: 2018/05/03 06:08:12 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int		update_gamemode1(t_sdl *sdlinfo)
 	FWRITE = 0;
 	FNONE = 0;
 	FPC = 0;
-	if (GAMEMODE == 1)
+	if (GAMEMODE == 2)
 	{
-		//get_data(sdlinfo);
+	//set_flags(sdlinfo);
 		get_txt_color(sdlinfo);
 		if (FNONE == 0)
 			MEM_ZONE = TTF_RenderText_Shaded(sdlinfo->police_game, "01",
@@ -34,15 +34,14 @@ int		update_gamemode1(t_sdl *sdlinfo)
 			return (-1);
 		}
 	}
-	else
-		if ((update_gamemode2(sdlinfo)) == -1)
-			return (-1);
+	else if ((update_gamemode2(sdlinfo)) == -1)
+		return (-1);
 	return (1);
 }
 
 int		update_gamemode2(t_sdl *sdlinfo)
 {
-	//get_data(sdlinfo);
+//set_flags(sdlinfo);
 	get_block_color(sdlinfo);
 	if (FWRITE == 1)
 		MEM_ZONE = TTF_RenderText_Shaded(sdlinfo->police_game, "  ",
@@ -60,6 +59,7 @@ int		update_gamemode2(t_sdl *sdlinfo)
 	}
 	return (1);
 }
+
 void	get_block_color(t_sdl *sdlinfo)
 {
 	printf("++++ In Block Color ++++\n");
@@ -105,7 +105,7 @@ void	get_txt_color(t_sdl *sdlinfo)
 		else if (PLAYER == 4)
 			sdlinfo->txt_color = sdlinfo->yellow;
 	}
-	if (FPC == 1)
+	else
 	{
 		sdlinfo->txt_color = sdlinfo->black;
 		if (PLAYER == 1)

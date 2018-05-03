@@ -6,12 +6,12 @@
 /*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 17:10:59 by susivagn          #+#    #+#             */
-/*   Updated: 2018/05/01 21:24:18 by susivagn         ###   ########.fr       */
+/*   Updated: 2018/05/03 06:08:23 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _MY_SDL_H_
-# define _MY_SDL_H_
+#ifndef MY_SDL_H
+# define MY_SDL_H
 
 # include <stdlib.h>
 # include <string.h>
@@ -21,54 +21,53 @@
 # include <SDL_image.h>
 # include <SDL_ttf.h>
 
-# define MEM_SIZE 4096
-# define PIX_X 20
-# define PIX_Y 18
-# define WINDOW_W 800
-# define WINDOW_BIGW 1285
-# define WINDOW_H 800
-# define WINDOW_BIGH 1160
-# define BPP 32
-# define FPC sdlinfo->pc
-# define FWRITE sdlinfo->write
-# define FNONE sdlinfo->none
-# define DATA sdlinfo->data
-# define GAMEMODE sdlinfo->game_mode
-# define PLAYER sdlinfo->player
-# define MAINSCREEN sdlinfo->screen
-# define MEM_ZONE sdlinfo->mem_zone
-# define EVENT_TYPE sdlinfo->event.type
-# define EVENT_KEY sdlinfo->event.key.keysym.sym
-# define BKGROUND_POS sdlinfo->background_pos
-# define TITLES_POS sdlinfo->title_pos
-# define PRESS_POS sdlinfo->press_pos
-# define CREDIT_POS sdlinfo->credit_pos
-# define MAIN_POS sdlinfo->main_pos
-# define NAVI_POS sdlinfo->navi_pos
-# define BKGROUND_SCREEN sdlinfo->background
-# define TITLE_SCREEN sdlinfo->title
-# define NAVI sdlinfo->navi
-# define CUR_START sdlinfo->cursor_start
-# define CUR_END sdlinfo->cursor_end
+# define MEM_SIZE			4096
+# define PIX_X 				20
+# define PIX_Y				18
+# define WINDOW_W 			800
+# define WINDOW_BIGW 		1280
+# define WINDOW_H 			800
+# define WINDOW_BIGH 		1152
+# define BPP 				32
+# define FPC 				sdlinfo->pc
+# define FWRITE 			sdlinfo->write
+# define FNONE 				sdlinfo->none
+# define DATA 				sdlinfo->data
+# define GAMEMODE 			sdlinfo->game_mode
+# define PLAYER 			sdlinfo->player
+# define MAINSCREEN 		sdlinfo->screen
+# define MEM_ZONE 			sdlinfo->mem_zone
+# define EVENT_TYPE 		sdlinfo->event.type
+# define EVENT_KEY 			sdlinfo->event.key.keysym.sym
+# define BKGROUND_POS 		sdlinfo->background_pos
+# define TITLES_POS 		sdlinfo->title_pos
+# define PRESS_POS 			sdlinfo->press_pos
+# define CREDIT_POS 		sdlinfo->credit_pos
+# define MAIN_POS 			sdlinfo->main_pos
+# define NAVI_POS 			sdlinfo->navi_pos
+# define BKGROUND_SCREEN 	sdlinfo->background
+# define TITLE_SCREEN 		sdlinfo->title
+# define NAVI 				sdlinfo->navi
+# define CUR_X 				sdlinfo->x
+# define CUR_Y 				sdlinfo->y
 
-
-typedef struct      s_sdl
+typedef struct		s_sdl
 {
 	uint8_t			game_mode;
 	uint8_t			none;
 	uint8_t			player;
 	uint8_t			pc;
 	uint8_t			write;
-	int				cursor_end;
-	int				cursor_start;
+	int				y;
+	int				x;
 	char			*data;
-    SDL_Surface		*screen;
+	SDL_Surface		*screen;
 	SDL_Surface		*background;
 	SDL_Surface		*title;
 	SDL_Surface		*mem_zone;
 	SDL_Surface		*navi;
 	SDL_Event		event;
-    SDL_Rect		main_pos;
+	SDL_Rect		main_pos;
 	SDL_Rect		title_pos;
 	SDL_Rect		press_pos;
 	SDL_Rect		background_pos;
@@ -90,28 +89,32 @@ typedef struct      s_sdl
 	SDL_Color		pc_yellow;
 	SDL_Color		grey;
 	int				save;
-}                   t_sdl;
+}					t_sdl;
 
-int			main_screen(t_sdl *sdlinfo);
-int			start_screen(t_sdl *sdlinfo);
-int			start_screen_set(t_sdl *sdlinfo);
-int			title_screen(t_sdl *sdlinfo);
-int			title_screen_set(t_sdl *sdlinfo);
-int			main_screen_update(t_sdl *sdlinfo);
-int			ttf_init(t_sdl *sdlinfo);
-void		init_ttf_color(t_sdl *sdlinfo);
-void		init_ttf_pc_color(t_sdl *sdlinfo);
-int			sdl_clean(t_sdl *sdlinfo, int resize, int surface_free);
-int			init_sdl(t_sdl *sdlinfo);
-int			event_handler(t_sdl *sdlinfo);
-int			title_event_handler(t_sdl *sdlinfo);
-void		navigation_key_handler(t_sdl *sdlinfo, int key);
-int			update_gamemode1(t_sdl *sdlinfo);
-int			update_gamemode2(t_sdl *sdlinfo);
-void		get_block_color(t_sdl *sdlinfo);
-void		get_txt_color(t_sdl *sdlinfo);
-void		test_pc_player(t_sdl *sdlinfo, int y);
-void		get_wrt_txt_color(t_sdl *sdlinfo);
-int			get_data(t_sdl *sdlinfo);
+int					main_screen(t_sdl *sdlinfo);
+int					start_screen(t_sdl *sdlinfo);
+int					start_screen_set(t_sdl *sdlinfo);
+int					title_screen(t_sdl *sdlinfo);
+int					title_screen_set(t_sdl *sdlinfo);
+int					title_screen_set_sup(t_sdl *sdlinfo);
+int					main_screen_update(t_sdl *sdlinfo);
+int					sdl_free(SDL_Surface *tofree1, SDL_Surface *tofree2,
+					SDL_Surface *tofree3);
+int					ttf_init(t_sdl *sdlinfo);
+void				init_ttf_color(t_sdl *sdlinfo);
+void				init_ttf_pc_color(t_sdl *sdlinfo);
+int					sdl_clean(t_sdl *sdlinfo, int resize, int surface_free);
+int					init_sdl(t_sdl *sdlinfo);
+int					event_handler(t_sdl *sdlinfo);
+int					title_event_handler(t_sdl *sdlinfo);
+void				navigation_key_handler(t_sdl *sdlinfo);
+int					update_gamemode1(t_sdl *sdlinfo);
+int					update_gamemode2(t_sdl *sdlinfo);
+void				get_block_color(t_sdl *sdlinfo);
+void				get_txt_color(t_sdl *sdlinfo);
+void				test_pc_player(t_sdl *sdlinfo, int y);
+void				get_wrt_txt_color(t_sdl *sdlinfo);
+int					set_flags(t_sdl *sdlinfo);
+int					quit_sdl(t_sdl *sdlinfo);
 
 #endif
